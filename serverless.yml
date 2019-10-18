@@ -1,0 +1,62 @@
+service: appointments-service
+
+frameworkVersion: ">=1.1.0 <2.0.0"
+
+plugins:
+  - serverless-pseudo-parameters
+  - serverless-plugin-scripts
+  - serverless-dynamodb-local
+  - serverless-offline
+  - serverless-webpack
+  - serverless-domain-manager 
+
+
+package:
+  exclude:
+    - .dynamodb/**
+    - node_modules/**
+    - .npmrc
+    - Jenkinsfile
+    - sonar-project.properties
+    - "*.config.js"
+    - "*/__tests__/**"
+
+custom:
+  accountId: "#{AWS::AccountId}"
+  webpack:
+    webpackConfig: 'webpack.config.js'   # Name of webpack configuration file
+    includeModules: true   # Node modules configuration for packaging
+    packager: 'npm'   # Packager that will be used to package your external modules
+  dynamodb:
+    start:
+      port: ${self:provider.environment.DYNAMODB_PORT_NO}
+      inMemory: true
+  customDomainEnabled:
+    production: true
+    staging: true
+    sandbox: false
+    local: false
+  scripts:
+    hooks:
+      'deploy:finalize': sls invoke -s ${self:provider.stage}  -f cron-get-session-token
+  
+provider:
+  name: aws
+  stackTags:
+    project: appointments-service
+    stage: ${self:provider.stage}
+    user: ${env:USER, 'nouser'}
+    team: unicorn
+  runtime: nodejs8.10
+  region: eu-west-1
+  stage: ${opt:stage, 'local'}
+  environment:
+    ${file(config/environment/${self:provider.stage}.yml)}
+  iamRoleStatements:
+    ${file(config/iamRoleStatements/iamRoleStatements.yml)}
+
+functions:
+  - ${file(config/functions/functions.yml)}
+
+resources:
+  ${file(config/resources/resources.yml)}

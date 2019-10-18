@@ -1,0 +1,20 @@
+Resources:
+  RequestBodyValidation:
+    Type: "AWS::ApiGateway::RequestValidator"
+    Properties:
+      Name: 'request-body-validator'
+      RestApiId:
+        Ref: ApiGatewayRestApi
+      ValidateRequestBody: true
+      ValidateRequestParameters: true
+  organisationsTable:
+    Type: 'AWS::DynamoDB::Table'
+    Properties:
+      TableName: ${self:provider.environment.TABLE_ORGANISATION}
+      AttributeDefinitions:
+        - AttributeName: id
+          AttributeType: S
+      KeySchema:
+        - AttributeName: id
+          KeyType: HASH
+      BillingMode: PAY_PER_REQUEST

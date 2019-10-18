@@ -1,0 +1,23 @@
+{
+    "$schema": "http://json-schema.org/draft-06/schema#",
+    "title": "PostOrgnanisationRequestBody",
+    "type": "object",
+    "properties": {
+      "name": {
+        "type": "string"
+      },
+      "yearFounded": {
+        "type": "integer"
+      },
+      "revenue": {
+        "type":"number"
+      },
+      "parentId": {
+        "type": "string"
+      }
+    },
+    "required": [
+      "name",
+      "yearFounded"
+    ]
+}

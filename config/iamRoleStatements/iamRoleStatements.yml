@@ -1,0 +1,7 @@
+- Effect: Allow
+  Action:
+    - dynamodb:Query
+    - dynamodb:GetItem
+    - dynamodb:PutItem
+  Resource:
+    - "arn:aws:dynamodb:${self:provider.environment.RESOURCE_PREFIX}:table/${self:provider.environment.TABLE_ORGANISATION}"

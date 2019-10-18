@@ -1,0 +1,11 @@
+STAGE: "${self:provider.stage}"
+RESOURCE_PREFIX: ${opt:region, self:provider.region}:${self:custom.accountId}
+API_VERSION: 'v1'
+# AWS_ACCESS_KEY_ID and AWS_SECRET_ACCESS_KEY are specified for dynamoose to connect to local dynamodb
+AWS_ACCESS_KEY_ID: 'something'
+AWS_SECRET_ACCESS_KEY: 'something else'
+REGION: 'eu-west-1'
+DYNAMODB_PORT_NO: 7001
+DYNAMOOSE_CREATE_TABLES: true
+DYNAMOOSE_UPDATE_TABLES: true
+TABLE_ORGANISATION: "${self:service}-organisations-${opt:stage, self:provider.stage}"

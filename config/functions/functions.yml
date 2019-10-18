@@ -1,0 +1,22 @@
+get-organisation-details:
+  handler: src/handlers/organisation/get.handler
+  events:
+    - http:
+        path: /organisation/{id}
+        method: get
+        cors: true
+        request:
+          parameters:
+            paths:
+              id: true
+
+post-organisation:
+  handler: src/handlers/organisation/post.handler
+  events:
+    - http:
+        path: /organisation/
+        method: post
+        cors: true
+        request:
+          schema:
+            application/json: ${file(src/handlers/organisation/models/post-request-body.json)}

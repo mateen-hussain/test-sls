@@ -1,0 +1,4 @@
+models:
+  - name: PostOrgnanisationRequestBody
+    contentType: "application/json"
+    schema: ${file(src/handlers/organisation/models/post-request-body.json)}
