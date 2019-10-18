@@ -17,3 +17,4 @@ junit.xml
 test-results
 
 .idea
+package-lock.json
